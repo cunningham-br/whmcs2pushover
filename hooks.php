@@ -7,7 +7,7 @@ function getToken()
 
 function getUsersToPermission($permission)
 {
-	return full_query("SELECT `access_token`, `supportdepts` FROM `tblpush_whmcs` as p, `tbladmins` as a WHERE `permissions` LIKE '%". $permission ."%' AND a.id = p.adminid");
+	return full_query("SELECT `access_token`, `supportdepts` FROM `tblpushover_whmcs` as p, `tbladmins` as a WHERE `permissions` LIKE '%". $permission ."%' AND a.id = p.adminid");
 }
 
 function push_ClientAdd($vars) {
@@ -17,8 +17,8 @@ function push_ClientAdd($vars) {
 
 	while($u = mysql_fetch_array( $administrators, MYSQL_ASSOC )){
 		sendPush($u['access_token'],
-				 'New WHMCS Client',
-				 'A new client has signed up!',
+				 'Novo Cliente',
+				 'Um novo cliente se registrou!',
 				 $CONFIG['SystemURL'].'/'.$customadminpath.'/clientssummary.php?userid='.$vars['userid']);
 	}
 
@@ -30,8 +30,8 @@ function push_InvoicePaid($vars) {
 	$administrators  = getUsersToPermission('new_invoice');
     while($u = mysql_fetch_array( $administrators, MYSQL_ASSOC )){
 		sendPush($u['access_token'],
-				 'An invoice has just been paid',
-				 'Invoice #'.$vars['invoiceid'].' has been paid.',
+				 'Fatura Paga',
+				 'Fatura #'.$vars['invoiceid'].' foi paga.',
 				  $CONFIG['SystemURL'].'/'.$customadminpath.'/invoices.php?action=edit&id='.$vars['invoiceid']);
 	}
 }
@@ -44,7 +44,7 @@ function push_TicketOpen($vars) {
     		$arr_dept = explode(',', $u['supportdepts']);
 		if(!in_array($vars['deptid'], $arr_dept)) continue;
 		sendPush($u['access_token'],
-				 'A new ticket has arrived',
+				 'Um ticket novo foi aberto',
 				substr($vars['subject'].' (in '.$vars['deptname'].")\n" . $vars['message'], 0, 480)  . '...',
 				 $CONFIG['SystemURL'].'/'.$customadminpath.'/supporttickets.php?action=viewticket&id='.$vars['ticketid']);
 	}
@@ -57,7 +57,7 @@ function push_TicketUserReply($vars) {
     		$arr_dept = explode(',', $u['supportdepts']);
 		if(!in_array($vars['deptid'], $arr_dept)) continue;
 		sendPush($u['access_token'],
-				 'A ticket has been updated',
+				 'Um ticket foi respondido',
 				 substr($vars['subject'].' (in '.$vars['deptname'].")\n" . $vars['message'], 0, 480) . '...',
 				 $CONFIG['SystemURL'].'/'.$customadminpath.'/supporttickets.php?action=viewticket&id='.$vars['ticketid']);
 	}
@@ -69,7 +69,7 @@ function push_CancellationRequest($vars) {
 	$administrators  = getUsersToPermission('new_cancellation');
     while($u = mysql_fetch_array( $administrators, MYSQL_ASSOC )){
 		sendPush($u['access_token'],
-				 ''.$vars['type'].' Cancellation Request ',
+				 ''.$vars['type'].' Um pedido de cancelamento foi feito ',
 				 substr($vars['relid'].' (by '.$vars['userid'].")\n" . $vars['reason'], 0, 480) . '...',
 				  $CONFIG['SystemURL'].'/'.$customadminpath.'/cancelrequests.php');
 	}
@@ -82,7 +82,7 @@ function push_AdminLogin($vars) {
 	$administrators  = getUsersToPermission('new_adminlogin');
     while($u = mysql_fetch_array( $administrators, MYSQL_ASSOC )){
 			sendPush($u['access_token'],
-					 ''.$vars['username'].' just logged in..',
+					 ''.$vars['username'].' acabou de logar na area administrativa..',
 					 $CONFIG['SystemURL'].'/'.$customadminpath.'systemadminlog.php');
 	}
 }
@@ -115,7 +115,7 @@ function widget_push_whmcs($vars) {
 		sendPush($_POST['user'], "Message from ". $u['username'], $_POST['message']);
 	}
 
-    $title = "Send a Push";
+    $title = "Enviar Push";
 
     $rs = full_query("SELECT `tbladmins`.`username` as `user`, `tblpushover_whmcs`.`access_token` as `token`  FROM `tblpushover_whmcs`, `tbladmins` WHERE `tbladmins`.`id` = `tblpushover_whmcs`.`adminid`");
     $content = '
@@ -127,7 +127,7 @@ function widget_push_whmcs($vars) {
 		$("#id_message_push").val("");
 	}
     </script>
-    <div id="send_push_confirm" style="display:none;margin:0 0 5px 0;padding:5px 20px;background-color:#DBF3BA;font-weight:bold;color:#6A942C;">Push Sent Successfully!</div>
+    <div id="send_push_confirm" style="display:none;margin:0 0 5px 0;padding:5px 20px;background-color:#DBF3BA;font-weight:bold;color:#6A942C;">Push enviado com Sucesso!</div>
     ';
     $options = "User: <select id='id_send_push_user'>";
     while($u = mysql_fetch_array( $rs, MYSQL_ASSOC ))
@@ -137,7 +137,7 @@ function widget_push_whmcs($vars) {
 	$options .= "</select>";
 
 	$content .= $options . "<br/><br/><textarea style='width:95%;height:100px;' id='id_message_push'></textarea><br/>";
-	$content .= '<input type="button" value="Send push" onclick="widgetsendpush()" />';
+	$content .= '<input type="button" value="Enviar push" onclick="widgetsendpush()" />';
     return array('title'=>$title,'content'=> $content);
 
 }
