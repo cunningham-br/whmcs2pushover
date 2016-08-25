@@ -5,11 +5,11 @@ if (!defined("WHMCS"))
 
 function whmcs2pushover_config() {
     $configarray = array(
-    "name" => "WHMCS to Pushover",
-    "description" => "Get data about WHMCS in your pushover",
-    "version" => "0.5",
-    "author" => "ViniciusMuniz.com",
-    "language" => "english",
+    "name" => "WHMCS 2 Pushover",
+    "description" => "Enviar dados do WHMCS para o Pushover",
+    "version" => "1.0",
+    "author" => "StiX.com.br",
+    "language" => "pt_br",
     "fields" => array(
         "key" => array ("FriendlyName" => "Pushover App Token", "Type" => "text", "Size" => "50", "Description" => "", "Default" => "", ),
     ));
@@ -54,7 +54,7 @@ function whmcs2pushover_output($vars) {
 	}
 
 	//===========================
-	echo "<p><a href='addonmodules.php?module=whmcs2pushover&disable=1'>Disable WHMCS to Pushover</a></p>";
+	#echo "<p><a href='addonmodules.php?module=whmcs2pushover&disable=1'>Disable WHMCS to Pushover</a></p>";
 
 	echo '<form method="POST">
 	<table class="form" width="100%" border="0" cellspacing="2" cellpadding="3">
@@ -63,17 +63,17 @@ function whmcs2pushover_output($vars) {
 			<td class="fieldarea"><input type="text" name="access_token" value="'. $data['access_token'] .'" size="60"/></td>
 		</tr>
 		<tr>
-			<td class="fieldlabel" width="200px">Notifications</td>
+			<td class="fieldlabel" width="200px">Notificações</td>
 			<td class="fieldarea">
 				<table width="100%">
 					<tr>
 						<td valign="top">
-							<input type="checkbox" name="permissions[new_client]" value="1" id="notifications_new_client" '.($data['permissions']['new_client'] == "1" ? "checked" : "").'> <label for="notifications_new_client">New Clients</label><br>
-							<input type="checkbox" name="permissions[new_invoice]" value="1" id="notifications_new_invoice" '.($data['permissions']['new_invoice'] == "1" ? "checked" : "").'> <label for="notifications_new_invoice">Paid Invoices</label><br>
-							<input type="checkbox" name="permissions[new_ticket]" value="1" id="notifications_new_ticket" '.($data['permissions']['new_ticket'] == "1" ? "checked" : "").'> <label for="notifications_new_ticket">New Support Ticket</label><br>
-							<input type="checkbox" name="permissions[new_update]" value="1" id="notifications_new_update" '.($data['permissions']['new_update'] == "1" ? "checked" : "").'> <label for="notifications_new_update">New Support Ticket Update</label><br>
-							<input type="checkbox" name="permissions[new_cancellation]" value="1" id="notifications_new_cancellation" '.($data['permissions']['new_cancellation'] == "1" ? "checked" : "").'> <label for="notifications_new_cancellation">New Cancellation Request</label><br>
-							<input type="checkbox" name="permissions[new_adminlogin]" value="1" id="notifications_new_adminlogin" '.($data['permissions']['new_adminlogin'] == "1" ? "checked" : "").'> <label for="notifications_new_adminlogin">Administrator Login Alerts</label><br>
+							<input type="checkbox" name="permissions[new_client]" value="1" id="notifications_new_client" '.($data['permissions']['new_client'] == "1" ? "checked" : "").'> <label for="notifications_new_client">Novo Cliente</label><br>
+							<input type="checkbox" name="permissions[new_invoice]" value="1" id="notifications_new_invoice" '.($data['permissions']['new_invoice'] == "1" ? "checked" : "").'> <label for="notifications_new_invoice">Fatura paga</label><br>
+							<input type="checkbox" name="permissions[new_ticket]" value="1" id="notifications_new_ticket" '.($data['permissions']['new_ticket'] == "1" ? "checked" : "").'> <label for="notifications_new_ticket">Novo ticket</label><br>
+							<input type="checkbox" name="permissions[new_update]" value="1" id="notifications_new_update" '.($data['permissions']['new_update'] == "1" ? "checked" : "").'> <label for="notifications_new_update">Nova resposta em ticket</label><br>
+							<input type="checkbox" name="permissions[new_cancellation]" value="1" id="notifications_new_cancellation" '.($data['permissions']['new_cancellation'] == "1" ? "checked" : "").'> <label for="notifications_new_cancellation">Pedido de cancelamento</label><br>
+							<input type="checkbox" name="permissions[new_adminlogin]" value="1" id="notifications_new_adminlogin" '.($data['permissions']['new_adminlogin'] == "1" ? "checked" : "").'> <label for="notifications_new_adminlogin">Alerta de login no Admin</label><br>
 						</td>
 					</tr>
 				</table>
@@ -81,7 +81,7 @@ function whmcs2pushover_output($vars) {
 		</tr>
 	</table>
 
-  <p align="center"><input type="submit" value="Save Changes" class="button"></p></form>
+  <p align="center"><input type="submit" value="Salvar" class="button"></p></form>
   ';
 
 
